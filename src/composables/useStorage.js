@@ -31,6 +31,7 @@ const useStorage = () => {
       error.value = err.message;
     }
   };
+  
   return { uploadImage, url, filePath, error, deleteImage };
 };
 

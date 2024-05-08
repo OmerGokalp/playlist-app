@@ -1,10 +1,12 @@
 <template>
   <div class="navbar">
     <nav>
-      <img src="@/assets/logo.png" alt="logo">
+      <router-link :to="{ name: 'home'}"><img src="@/assets/logo.png" alt="logo"></router-link>
       <h1><router-link :to="{ name: 'home' }">PlayList</router-link></h1>        
       <div class="links">
         <div v-if="user">
+          <span>Hi, {{ user.displayName }}</span>
+          <router-link class="btn" :to="{ name: 'createplaylist'}">Create Playlist</router-link>
           <button @click="handleClick">Logout</button>
         </div>
         <div v-else>          
@@ -61,5 +63,12 @@ nav .links a, button {
 }
 nav img {
   max-height: 40px;
+}
+span {
+  font-size: 14px;
+  display: inline-block;
+  margin-right: 16px;
+  padding-right: 16px;
+  border-right: 1px solid #ccc;
 }
 </style>
