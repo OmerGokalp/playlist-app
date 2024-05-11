@@ -15,15 +15,16 @@
         <div v-if="!playlist.songs.length">No songs have been added yet.</div>
         <div v-for="song in playlist.songs" :key="song.id" class="single-song">
           <div class="details">
+            <img :src="song.cover" alt="cover" />
             <h3> {{ song.title }}</h3>
             <p>{{ song.artist }}</p>
           </div>
           <button v-if="ownership" @click="handleClick(song.id)">Delete</button>
-        </div>                
+        </div>
         <AddSong v-if="ownership" :playlist="playlist"/>
       </div>
     </div>
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -47,7 +48,7 @@ export default {
 
     const ownership = computed(() => {
       return (
-        playlist.value && user.value && user.value.uid === playlist.value.userId 
+        (playlist.value && getUserInfo.value) && (getUserInfo.value.user.value.uid === playlist.value.userId)
       );
     });
 
@@ -57,10 +58,15 @@ export default {
       router.push({ name: 'home' });
     };
 
+    const getUserInfo = computed(() => {
+      return getUser();
+    });
+
     const handleClick = async (id) => {
       const songs = playlist.value.songs.filter((song) => song.id != id);
       await updateDoc({songs});
-    }; 
+    };
+
     return { error, playlist, ownership, handleDelete, handleClick };
   },
 };
